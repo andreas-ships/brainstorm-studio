@@ -1,0 +1,53 @@
+# Defaults for the brainstorm-studio workflow. Claude reads this file directly at the
+# start of a session. Anything the user states in chat ("always use SCAMPER first",
+# "save sessions in <folder>") overrides these values for that run.
+# Merge rules: scalars: the user's override wins; arrays: entries append.
+
+[workflow]
+
+# Steps to run before the standard activation (greeting, resume check).
+activation_steps_prepend = []
+
+# Steps to run after the greeting but before facilitation begins.
+activation_steps_append = []
+
+# Facts the facilitator keeps in mind for the whole session (domain constraints, house
+# rules, stylistic guardrails). Each entry is a literal sentence, or a `file:`-prefixed
+# path/glob whose contents are loaded as facts.
+persistent_facts = []
+
+# The technique library, loaded on demand through scripts/brain.py (always passed
+# with `--file {workflow.brain_methods}`).
+brain_methods = "{skill-root}/assets/brain-methods.csv"
+
+# Techniques to reach first for when proposing a method, where they fit the goal.
+# Names must match the library or additional_techniques.
+# Example: favorite_techniques = ["SCAMPER Method", "Six Thinking Hats", "First Principles Thinking"]
+favorite_techniques = []
+
+# Extra techniques, and whole new categories, merged into the library without editing
+# the CSV. Each entry mirrors the library's shape: category, technique_name, description.
+# They are first-class in every flow (chosen, browse, category draws, inventive).
+# Sessions can also grow this list at wrap-up through `extra-techniques.json`.
+# Example:
+#   [[workflow.additional_techniques]]
+#   category = "domain-specific"
+#   technique_name = "Regulatory Inversion"
+#   description = "Start from the compliance constraint and brainstorm what becomes possible only because of it."
+additional_techniques = []
+
+# Where sessions live. {output_folder} is the current working directory unless the user
+# points elsewhere; {topic_slug} comes from the session topic, so each topic gets its own
+# folder. The resume check globs `{output_dir}/*/.memlog.md`.
+output_dir = "{output_folder}/brainstorming"
+output_folder_name = "brainstorm-{topic_slug}-{date}"
+
+# Run when the session completes, after artifacts are delivered. A string, or an array of
+# instructions executed in order. Empty for none.
+on_complete = ""
+
+# Natural-language directives applied after artifacts are produced, to route them beyond
+# local files (Notion, Drive, Confluence...). Each names the tool, the destination and the
+# fields it needs. If a named tool is unavailable, skip the handoff and flag it; local
+# files always exist.
+external_handoffs = []

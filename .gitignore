@@ -1,0 +1,25 @@
+# Brainstorm session output (default output_dir in customize.toml)
+brainstorming/
+*.memlog.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Build output
+*.zip
